@@ -26,21 +26,26 @@ const saveHistory = (city) => {
 
 const loadButtons = () => {
   const buttonBlock = document.querySelector("#history");
-  const history = localStorage.getItem('history'); 
+  let history = localStorage.getItem("history");
   if (!history) {
-    localStorage.setItem("history", JSON.stringify({
-        cities: []
-    }));
+    localStorage.setItem(
+      "history",
+      JSON.stringify({
+        cities: [],
+      })
+    );
   }
 
-  for (city in history) {
+  history = JSON.parse(localStorage.getItem("history"));
+  console.log(history)
+  history.cities.foreach((city) => {
     const button = document.createElement("button");
     button.classList.add("btn");
     button.classList.add("btn-primary");
-    button.innerHTML = city;
+    button.innerHTML = history[city];
 
     buttonBlock.appendChild(button);
-  }
+  });
 };
 
 async function handleInput(event) {
@@ -52,9 +57,8 @@ async function handleInput(event) {
   const weatherData = await searchApi(inputCity);
   console.log(weatherData);
 
-  const history = JSON.parse(localStorage.getItem('history')); 
-  const updatedHistory = history.cities;
-  updatedHistory.push(inputCity);
+  const history = JSON.parse(localStorage.getItem("history")).cities;
+  const updatedHistory = history.push(inputCity);
 
   localStorage.setItem("history", JSON.stringify(updatedHistory));
   loadButtons();
@@ -62,4 +66,3 @@ async function handleInput(event) {
 
 searchFormEl.addEventListener("submit", handleInput);
 loadButtons();
-
