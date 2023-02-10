@@ -1,0 +1,13 @@
+html,body {
+    height: 100%;
+}
+
+.card {
+    margin: 1rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+}
+
+a {
+    margin-top: 1rem;
+}
